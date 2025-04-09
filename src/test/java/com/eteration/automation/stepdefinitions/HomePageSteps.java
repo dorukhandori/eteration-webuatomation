@@ -2,9 +2,9 @@ package com.eteration.automation.stepdefinitions;
 
 import com.eteration.automation.driver.DriverManager;
 import com.eteration.automation.pages.HomePage;
-import io.cucumber.java.tr.Diyelimki;
-import io.cucumber.java.tr.Ozaman;
-import io.cucumber.java.tr.Ve;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.And;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
@@ -18,21 +18,22 @@ public class HomePageSteps {
         this.homePage = new HomePage(driver);
     }
     
-    @Diyelimki("kullanıcı anasayfaya gider")
-    public void userNavigatesToHomePage() {
+    @Given("user navigates to the homepage")
+    public void user_navigates_to_the_homepage() {
         homePage.navigateToHomePage();
     }
     
-    @Ozaman("sayfa başlığı {string} içermelidir")
-    public void pageTitleShouldContain(String expectedTitle) {
+    @Then("the page title should contain {string}")
+    public void the_page_title_should_contain(String expectedTitle) {
         String actualTitle = homePage.getPageTitle();
         Assert.assertTrue(actualTitle.contains(expectedTitle), 
-                "Sayfa başlığı '" + expectedTitle + "' içermiyor. Gerçek başlık: " + actualTitle);
+                "Page title does not contain '" + expectedTitle + "'. Actual title: " + actualTitle);
     }
     
-    @Ve("ana navigasyon menüsü görüntülenmelidir")
-    public void mainNavigationMenuShouldBeDisplayed() {
-        Assert.assertTrue(homePage.isMainNavigationMenuDisplayed(), 
-                "Ana navigasyon menüsü görüntülenmiyor");
+    @And("the Eteration logo should be displayed")
+    public void the_eteration_logo_should_be_displayed() {
+        Assert.assertTrue(homePage.isLogoDisplayed(), 
+                "Eteration logo is not displayed");
+        System.out.println("Verified that the Eteration logo is displayed");
     }
 } 

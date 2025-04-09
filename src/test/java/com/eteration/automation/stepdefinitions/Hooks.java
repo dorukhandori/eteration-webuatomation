@@ -24,8 +24,16 @@ public class Hooks {
     @Before
     public void setUp(Scenario scenario) {
         log.info("Starting scenario: {}", scenario.getName());
+        
+        // Ensure WebDriver directory exists for screenshots
+        File screenshotsDir = new File("target/screenshots");
+        if (!screenshotsDir.exists()) {
+            screenshotsDir.mkdirs();
+        }
+        
         // Initialize the WebDriver through the DriverManager
-        DriverManager.getDriver();
+        WebDriver driver = DriverManager.getDriver();
+        log.info("WebDriver initialized with session ID: {}", driver.toString());
     }
     
     @After

@@ -1,14 +1,18 @@
 package com.eteration.automation.pages;
 
 import com.eteration.automation.config.ConfigReader;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class HomePage extends BasePageObject {
     
-    @FindBy(css = "nav.main-navigation")
-    private WebElement mainNavigationMenu;
+    // Logo XPath as provided
+    private final String LOGO_XPATH = "/html/body/div/div[1]/div/div[1]";
+    
+    @FindBy(xpath = "/html/body/div/div[1]/div/div[1]")
+    private WebElement logoElement;
     
     public HomePage(WebDriver driver) {
         super(driver);
@@ -27,9 +31,16 @@ public class HomePage extends BasePageObject {
         return title;
     }
     
-    public boolean isMainNavigationMenuDisplayed() {
-        boolean isDisplayed = isDisplayed(mainNavigationMenu);
-        log.info("Main navigation menu is displayed: {}", isDisplayed);
-        return isDisplayed;
+    public boolean isLogoDisplayed() {
+        try {
+            // Dynamic finding to ensure we have the latest state
+            WebElement logo = driver.findElement(By.xpath(LOGO_XPATH));
+            boolean isDisplayed = isDisplayed(logo);
+            log.info("Eteration logo is displayed: {}", isDisplayed);
+            return isDisplayed;
+        } catch (Exception e) {
+            log.error("Error checking if logo is displayed: {}", e.getMessage());
+            return false;
+        }
     }
 } 
